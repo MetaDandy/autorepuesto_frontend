@@ -9,8 +9,30 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { useAuth } from "@/hooks/use_auth"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+    const router = useRouter()
+
+    const { isAuthenticated, isHydrated } = useAuth()
+
+    useEffect(() => {
+        if (isHydrated && !isAuthenticated()) {
+            router.replace("/")
+        }
+    }, [isHydrated])
+
+    // Fallback opcional mientras se hidrata el store
+    if (!isHydrated) {
+        return (
+            <div className="p-4 text-muted-foreground">
+                Verificando sesión...
+            </div>
+        )
+    }
+
     return (
         <SidebarProvider>
             <AppSidebar />
@@ -22,7 +44,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             orientation="vertical"
                             className="mr-2 data-[orientation=vertical]:h-4"
                         />
-                        <ThemeToggle/>
+                        <ThemeToggle />
                         <Separator
                             orientation="vertical"
                             className="mr-2 data-[orientation=vertical]:h-4"

@@ -3,11 +3,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/use_auth";
 import { API_ROUTES } from "@/lib/api.routes";
-import useAuthStore from "@/lib/auth.store";
 import useAppStore from "@/lib/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -17,13 +18,17 @@ const loginSchema = z.object({
 });
 
 export default function Home() {
-  const { setToken } = useAuthStore();
+  const { setToken, isAuthenticated, isHydrated } = useAuth();
   const { setLockScreen, showToast } = useAppStore();
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(loginSchema),
   });
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (isHydrated && isAuthenticated()) router.replace("/dashboard")
+  }, [isHydrated])
 
   const onSubmit = async (data: any) => {
     setLockScreen({ isVisible: true, type: "loading", content: "Iniciando sesión..." });
@@ -55,7 +60,7 @@ export default function Home() {
 
   return (
     <div className="relative flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-950 p-4 overflow-hidden">
-      
+
       {/* Fondo decorativo */}
       <div className="absolute inset-0 z-0 bg-gradient-to-br from-blue-100 via-white to-yellow-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900" />
       <div className="absolute z-0 blur-3xl opacity-30 inset-0 pointer-events-none">
