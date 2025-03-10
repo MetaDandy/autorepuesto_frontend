@@ -7,6 +7,7 @@ import { API_ROUTES } from "@/lib/api.routes";
 import useAuthStore from "@/lib/auth.store";
 import useAppStore from "@/lib/store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -21,6 +22,8 @@ export default function Home() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: zodResolver(loginSchema),
   });
+
+  const router = useRouter();
 
   const onSubmit = async (data: any) => {
     setLockScreen({ isVisible: true, type: "loading", content: "Iniciando sesión..." });
@@ -41,6 +44,7 @@ export default function Home() {
       setToken(response.token);
       showToast('Inicio de sesión exitoso', "Bienvenido de vuelta", "success");
       reset();
+      router.push('/dashboard');
     } catch (error: any) {
       showToast("Error", error.message, "error");
       console.error("Error en la solicitud:", error);

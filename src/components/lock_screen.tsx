@@ -2,6 +2,7 @@
 
 import useAppStore from "@/lib/store";
 import { Repeat } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion"
 
 const LockScreen = () => {
   const { lockScreen } = useAppStore();
@@ -42,11 +43,27 @@ const LockScreen = () => {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-      <div className="rounded-xl bg-white/10 backdrop-blur-md p-6 text-white">
-        {renderContent}
-      </div>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        key="lockscreen-backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm"
+      >
+        <motion.div
+          key="lockscreen-content"
+          initial={{ opacity: 0, scale: 0.95, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 10 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="rounded-xl bg-white/10 backdrop-blur-md p-6 text-white shadow-xl"
+        >
+          {renderContent}
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
