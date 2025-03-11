@@ -2,7 +2,7 @@
 
 import { AppSidebar } from "@/components/app-sidebar"
 import BreadcrumbDynamic from "@/components/layouts/breadcrumb_dynamic"
-import { ThemeToggle } from "@/components/theme_toggle"
+import { ThemeToggle } from "@/components/core/theme_toggle"
 import { Separator } from "@/components/ui/separator"
 import {
     SidebarInset,

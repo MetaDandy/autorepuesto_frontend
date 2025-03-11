@@ -11,7 +11,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "./ui/alert-dialog";
+} from "../ui/alert-dialog";
 
 const Alert = () => {
   const { alert } = useAppStore();

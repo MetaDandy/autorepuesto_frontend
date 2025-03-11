@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import LockScreen from "@/components/lock_screen";
+import LockScreen from "@/components/core/lock_screen";
 import { Toaster } from "@/components/ui/sonner";
-import Alert from "@/components/alert";
-import { Modal } from "@/components/modal";
+import Alert from "@/components/core/alert";
+import { Modal } from "@/components/core/modal";
 import ThemeHandler from "@/lib/theme_handler";
 import { Providers } from "./providers";
 
