@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Alert from "@/components/alert";
 import { Modal } from "@/components/modal";
 import ThemeHandler from "@/lib/theme_handler";
+import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,12 +33,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <LockScreen/>
-        <Alert/>
-        <Modal/>
-        <ThemeHandler/>
+        <LockScreen />
+        <Alert />
+        <Modal />
+        <ThemeHandler />
         <Toaster position="top-right" richColors />
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
