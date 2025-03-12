@@ -1,23 +1,23 @@
 'use client';
 
-import { PaginationState } from "@tanstack/react-table";
-import { Permissions } from "./permissions";
-import { useState } from "react";
-import { DynamicTable } from "@/components/table/dynamic_table";
-import { API_ROUTES } from "@/lib/api.routes";
 import { useFindAllQuery } from "@/hooks/use_find_all_query";
-import { PermissionColumns } from "./permission.column";
+import { API_ROUTES } from "@/lib/api.routes";
 import { QUERY_KEY } from "@/lib/query_key";
+import { PaginationState } from "@tanstack/react-table";
+import { useState } from "react";
+import { Category } from "./category";
+import { DynamicTable } from "@/components/table/dynamic_table";
+import { CategoryColumns } from "./category.column";
 
-export default function PermissionPage() {
+export default function CategoryPage() {
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: 5,
     });
 
-    const { data, isFetching, isLoading, dataUpdatedAt } = useFindAllQuery<Permissions>({
-        queryKey: QUERY_KEY.PERMISSION,
-        route: API_ROUTES.FIND_ALL_PERMISSIONS,
+    const { data, isFetching, isLoading, dataUpdatedAt } = useFindAllQuery<Category>({
+        queryKey: QUERY_KEY.CATEGORY,
+        route: API_ROUTES.CATEGORY,
         pageIndex: pagination.pageIndex,
         pageSize: pagination.pageSize,
     });
@@ -26,8 +26,8 @@ export default function PermissionPage() {
 
     return (
         <DynamicTable
-            title="Permisos"
-            columns={PermissionColumns}
+            title="Categorias"
+            columns={CategoryColumns}
             data={data?.data || []}
             isLoading={isLoading || (isFetching && dataUpdatedAt === 0)}
             pageCount={totalPages}

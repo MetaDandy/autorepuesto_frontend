@@ -5,5 +5,8 @@ export const API_ROUTES = {
   SIGN_IN: `${API_URL}/auth/sign_in`,
 
   // Permissions
-  FIND_ALL_PERMISSIONS: `${API_URL}/role/permissions`
+  FIND_ALL_PERMISSIONS: `${API_URL}/role/permissions`,
+
+  // Category
+  CATEGORY: `${API_URL}/category`
 }
