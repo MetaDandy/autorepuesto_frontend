@@ -26,16 +26,28 @@ type Modal = {
   btnCancel?: React.ReactNode;
 } | false;
 
+type Sheet = {
+  isOpen: boolean;
+  title: string;
+  description: string;
+  content: React.ReactNode;
+  btnAction?: React.ReactNode;
+  btnCancel?: React.ReactNode;
+  side?: 'top' | 'right' | 'bottom' | 'left';
+} | false;
+
 type AppState = {
   theme: Theme;
   alert: Alert;
   lockScreen: LockScreen;
   modal: Modal;
+  sheet: Sheet;
   setTheme: (theme: Theme) => void;
   setAlert: (alert: Alert) => void;
   setLockScreen: (lock: LockScreen) => void;
   setModal: (modal: Modal) => void;
   showToast: (title: string, description?: string, type?: "success" | "error" | "info") => void;
+  setSheet: (sheetForm: Sheet) => void;
 };
 
 const useAppStore = create<AppState>((set) => ({
@@ -43,6 +55,7 @@ const useAppStore = create<AppState>((set) => ({
   alert: false,
   lockScreen: false,
   modal: false,
+  sheet: false,
   setTheme: (theme) => set({ theme }),
   setAlert: (alert) => set({ alert }),
   setLockScreen: (lockScreen) => set({ lockScreen }),
@@ -50,6 +63,7 @@ const useAppStore = create<AppState>((set) => ({
   showToast: (title, description, type = "info") => {
     toast[type](title, { description });
   },
+  setSheet: (sheet) => set({ sheet })
 }));
 
 export default useAppStore;

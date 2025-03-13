@@ -3,7 +3,7 @@ import { FindAll } from '@/types/find_all'
 import { useAuth } from './use_auth'
 
 type UseFindAllQueryParams<T> = {
-  queryKey: string
+  queryKey:  (string | Record<string, unknown>)[]
   route: string
   pageIndex: number
   pageSize: number
@@ -32,5 +32,5 @@ export function useFindAllQuery<T>({
     gcTime: 10 * 60 * 1000,
     //keepPreviousData: true,
     placeholderData: (prev) => prev,
-  })
+  });
 }

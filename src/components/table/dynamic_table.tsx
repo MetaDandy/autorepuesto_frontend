@@ -19,11 +19,15 @@ import {
   PaginationState,
   VisibilityState,
   getPaginationRowModel,
+  getFilteredRowModel,
 } from "@tanstack/react-table"
 import { ArrowUp, ArrowDown, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { ColumnVisibilityToggle } from "./column_visibility_toggle"
 import { TableFooter } from "./footer_table"
+import { Input } from "../ui/input"
+import { Switch } from "../ui/switch"
+import { Label } from "../ui/label"
 
 type Props<T> = {
   data: T[];
@@ -33,6 +37,11 @@ type Props<T> = {
   pageCount: number;
   pagination: PaginationState;
   onPaginationChange: (pagination: PaginationState) => void;
+  globalFilterPlaceholder?: string;
+  createName?: string;
+  handleCreate?: () => void;
+  showDeleted: boolean;
+  setShowDeleted: (val: boolean)=> void;
 }
 
 export function DynamicTable<T>({
@@ -43,9 +52,15 @@ export function DynamicTable<T>({
   pageCount,
   pagination,
   onPaginationChange,
+  globalFilterPlaceholder = "Search...",
+  handleCreate,
+  createName = "Crear",
+  showDeleted,
+  setShowDeleted
 }: Props<T>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
     data,
@@ -54,12 +69,15 @@ export function DynamicTable<T>({
     manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     state: {
       pagination,
       sorting,
       columnVisibility,
+      globalFilter
     },
+    onGlobalFilterChange: setGlobalFilter,
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
   })
@@ -68,11 +86,34 @@ export function DynamicTable<T>({
     <div className="space-y-4 p-4">
       {title && <h1 className="text-2xl font-semibold">{title}</h1>}
 
-      <ColumnVisibilityToggle
-        columns={columns}
-        columnVisibility={columnVisibility}
-        onColumnVisibilityChange={setColumnVisibility}
-      />
+      <div className="flex justify-between mb-4">
+        <Input
+          placeholder={globalFilterPlaceholder}
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          className="max-w-sm"
+        />
+        {handleCreate && <Button onClick={handleCreate}>{createName}</Button>}
+      </div>
+
+      <div className="flex justify-between mb-4">
+        <ColumnVisibilityToggle
+          columns={columns}
+          columnVisibility={columnVisibility}
+          onColumnVisibilityChange={setColumnVisibility}
+        />
+
+        <div className="flex items-center space-x-2">
+          <Switch
+            checked={showDeleted}
+            onCheckedChange={(val) => setShowDeleted(val)}
+            id="show-deleted"
+          />
+          <Label htmlFor="show-deleted">
+            {showDeleted ? "Mostrando eliminados" : "Mostrando activos"}
+          </Label>
+        </div>
+      </div>
 
       <div className="space-y-4">
         <div className="w-full overflow-auto relative">

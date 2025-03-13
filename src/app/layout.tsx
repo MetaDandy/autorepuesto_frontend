@@ -7,6 +7,7 @@ import Alert from "@/components/core/alert";
 import { Modal } from "@/components/core/modal";
 import ThemeHandler from "@/lib/theme_handler";
 import { Providers } from "./providers";
+import { SheetForm } from "@/components/core/sheet_form";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
         <ThemeHandler />
         <Toaster position="top-right" richColors />
         <Providers>
+          <SheetForm />
           {children}
         </Providers>
       </body>
