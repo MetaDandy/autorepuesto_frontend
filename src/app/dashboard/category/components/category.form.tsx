@@ -10,7 +10,7 @@ import { FormInputField } from "@/components/form/form_input_field";
 import { Button } from "@/components/ui/button";
 import { useCategoryMutations } from "../utils/use_category_mutations";
 
-export const CategoryForm = ({ refetch, category }: { refetch: ()=>void,category?: Category }) => {
+export const CategoryForm = ({ refetch, category }: { refetch: () => void, category?: Category }) => {
   const { setLockScreen, setSheet } = useAppStore();
   const { mutationCreate, mutationUpdate } = useCategoryMutations(refetch);
 
@@ -36,7 +36,7 @@ export const CategoryForm = ({ refetch, category }: { refetch: ()=>void,category
 
     setSheet(false);
 
-    if (category?.id) mutationUpdate.mutate({id: category.id, data});
+    if (category?.id) mutationUpdate.mutate({ id: category.id, data });
     else mutationCreate.mutate(data);
   }
 

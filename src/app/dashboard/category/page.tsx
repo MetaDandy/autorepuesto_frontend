@@ -19,7 +19,7 @@ export default function CategoryPage() {
         pageSize: 5,
     });
     const [showDeleted, setShowDeleted] = useState(false);
-    const { setSheet, setModal, setLockScreen } = useAppStore();
+    const { setSheet, setLockScreen, setAlert } = useAppStore();
     const { data, isFetching, isLoading, dataUpdatedAt, refetch } = useFindAllQuery<Category>({
         queryKey: [QUERY_KEY.CATEGORY, { showDeleted }],
         route: showDeleted ? API_ROUTES.CATEGORY_FIND_ALL_SOFT : API_ROUTES.CATEGORY,
@@ -56,14 +56,14 @@ export default function CategoryPage() {
     }
 
     const handleHardDelete = async (id: string) => {
-        setModal({
+        setAlert({
             title: 'Eliminar la categoría permanentemente.',
             isOpen: true,
             description: '',
-            content: 'Una vez eliminado no se puede recuperar',
-            btnAction:
+            btnCancel:
                 <Button
                     onClick={() => {
+                        setAlert(false);
                         setLockScreen({
                             isVisible: true,
                             type: "loading",
@@ -76,9 +76,9 @@ export default function CategoryPage() {
                 >
                     Eliminar
                 </Button>,
-            btnCancel:
+            btnAction:
                 <Button
-                    onClick={() => setModal(false)}
+                    onClick={() => setAlert(false)}
                 >
                     Cancelar
                 </Button>
