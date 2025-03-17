@@ -58,6 +58,7 @@ export function TableFooter({
             {/* Controles de navegación por página */}
             <div className="flex items-center gap-1 flex-wrap">
                 <Button
+                    type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => onPageChange(0)}
@@ -66,6 +67,7 @@ export function TableFooter({
                     <ChevronsLeft className="w-4 h-4" />
                 </Button>
                 <Button
+                    type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => onPageChange(pagination.pageIndex - 1)}
@@ -85,6 +87,7 @@ export function TableFooter({
 
                     return (
                         <Button
+                            type="button"
                             key={`page-${pageNumber}`}
                             variant={pagination.pageIndex + 1 === pageNumber ? 'default' : 'outline'}
                             size="sm"
@@ -97,6 +100,7 @@ export function TableFooter({
 
 
                 <Button
+                    type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => onPageChange(pagination.pageIndex + 1)}
@@ -105,6 +109,7 @@ export function TableFooter({
                     <ChevronRight className="w-4 h-4" />
                 </Button>
                 <Button
+                    type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => onPageChange(pageCount - 1)}

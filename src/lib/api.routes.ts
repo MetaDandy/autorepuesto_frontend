@@ -12,5 +12,12 @@ export const API_ROUTES = {
   CATEGORY_FIND_ALL_SOFT: `${API_URL}/category/soft`,
   CATEGORY_HARD_DELETE: `${API_URL}/category/hard_delete`,
   CATEGORY_SOFT_DELETE: `${API_URL}/category/soft_delete`,
-  CATEGORY_RESTORE: `${API_URL}/category/restore`
+  CATEGORY_RESTORE: `${API_URL}/category/restore`,
+
+  // Category type
+  CATEGORY_TYPE: `${API_URL}/category_type`,
+  CATEGORY_TYPE_FIND_ALL_SOFT: `${API_URL}/category_type/soft`,
+  CATEGORY_TYPE_HARD_DELETE: `${API_URL}/category_type/hard_delete`,
+  CATEGORY_TYPE_SOFT_DELETE: `${API_URL}/category_type/soft_delete`,
+  CATEGORY_TYPE_RESTORE: `${API_URL}/category_type/restore`,
 }
