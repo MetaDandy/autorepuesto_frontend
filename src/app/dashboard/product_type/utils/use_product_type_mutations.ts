@@ -1,47 +1,47 @@
 import { useAuth } from "@/hooks/use_auth";
 import useAppStore from "@/lib/store";
-import { CategoryType } from "./category_type";
 import { useMutation } from "@tanstack/react-query";
-import { CategoryTypeSchema } from "./category_type.schema";
+import { useRouter } from "next/navigation";
+import { ProductType } from "./product_type";
+import { ProductTypeSchema } from "./product_type.schema";
 import { FetchHelper } from "@/lib/fetch_helper";
 import { API_ROUTES } from "@/lib/api.routes";
-import { useRouter } from "next/navigation";
 
-export const useCategoryTypeMutations = (refetch?: () => void) => {
+export const useProductTypeMutations = (refetch?: ()=> void) => {
   const { setLockScreen, showToast } = useAppStore();
   const router = useRouter();
   const { token } = useAuth();
 
-  const mutationCreate = useMutation<CategoryType, Error, CategoryTypeSchema>({
-    mutationFn: async (data) => await FetchHelper<CategoryType>({
+  const mutationCreate = useMutation<ProductType, Error, ProductTypeSchema>({
+    mutationFn: async (data) => await FetchHelper<ProductType>({
       token: token ?? '',
-      baseUrl: API_ROUTES.CATEGORY_TYPE,
+      baseUrl: API_ROUTES.PRODUCT_TYPE,
       data,
     }),
     onSuccess: () => {
       setLockScreen(false);
 
-      router.push('/dashboard/category_type');
+      router.push('/dashboard/product_type');
 
       showToast(
-        'Tipo de categoría creada.',
-        'El tipo de categoría fue creada exitosamente.',
+        'Tipo de producto creada.',
+        'El tipo de producto fue creada exitosamente.',
         "success"
       );
     },
     onError: (error) => {
       showToast(
-        'El tipo de categoría no se pudo crear.',
+        'El tipo de producto no se pudo crear.',
         `Error: ${error.message}`,
         "error"
       );
     },
   });
 
-  const mutationUpdate = useMutation<CategoryType, Error, { id: string; data: CategoryTypeSchema }>({
+  const mutationUpdate = useMutation<ProductType, Error, { id: string; data: ProductTypeSchema }>({
     mutationFn: async ({ id, data }) => {
-      return await FetchHelper<CategoryType>({
-        baseUrl: `${API_ROUTES.CATEGORY_TYPE}/${id}`,
+      return await FetchHelper<ProductType>({
+        baseUrl: `${API_ROUTES.PRODUCT_TYPE}/${id}`,
         token: token ?? '',
         data: data,
         method: 'PATCH',
@@ -50,11 +50,11 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
     onSuccess: () => {
       setLockScreen(false);
 
-      router.push('/dashboard/category_type');
+      router.push('/dashboard/product_type');
 
       showToast(
-        'Tipo de categoría Actualizada.',
-        'El tipo de categoría fue actualizada exitosamente.',
+        'Producto Actualizado.',
+        'El tipo de producto fue actualizada exitosamente.',
         "success"
       );
     },
@@ -62,7 +62,7 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
       setLockScreen(false);
 
       showToast(
-        'El tipo de categoría no se pudo actualizar.',
+        'El tipo de producto no se pudo actualizar.',
         `Error: ${error.message}`,
         "error"
       );
@@ -70,9 +70,9 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
   });
 
   const mutationHardDelete = useMutation<string, Error, string>({
-    mutationFn: async (id: string) => await FetchHelper<CategoryType>({
+    mutationFn: async (id: string) => await FetchHelper<ProductType>({
       token: token ?? '',
-      baseUrl: `${API_ROUTES.CATEGORY_TYPE_HARD_DELETE}/${id}`,
+      baseUrl: `${API_ROUTES.PRODUCT_TYPE_HARD_DELETE}/${id}`,
       method: "DELETE"
     }),
     onSuccess: () => {
@@ -81,8 +81,8 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
       setLockScreen(false);
 
       showToast(
-        'Tipo de categoría permanentemente eliminado.',
-        'Tipo de categoría fue eliminada permanentemente exitosamente.',
+        'Tipo de producto permanentemente eliminado.',
+        'El tipo producto fue eliminada permanentemente exitosamente.',
         "success"
       );
     },
@@ -90,7 +90,7 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
       setLockScreen(false);
 
       showToast(
-        'El tipo de categoría no se pudo eliminar permanentemente.',
+        'El tipo de producto no se pudo eliminar permanentemente.',
         `Error: ${error.message}`,
         "error"
       );
@@ -99,9 +99,9 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
   });
 
   const mutationSoftDelete = useMutation<string, Error, string>({
-    mutationFn: async (id: string) => await FetchHelper<CategoryType>({
+    mutationFn: async (id: string) => await FetchHelper<ProductType>({
       token: token ?? '',
-      baseUrl: `${API_ROUTES.CATEGORY_TYPE_SOFT_DELETE}/${id}`,
+      baseUrl: `${API_ROUTES.PRODUCT_TYPE_SOFT_DELETE}/${id}`,
       method: "DELETE"
     }),
     onSuccess: () => {
@@ -110,8 +110,8 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
       setLockScreen(false);
 
       showToast(
-        'Tipo de categoría eliminada.',
-        'El tipo de categoría fue eliminada exitosamente.',
+        'Tipo de producto eliminado.',
+        'El tipo de producto fue eliminada exitosamente.',
         "success"
       );
     },
@@ -119,7 +119,7 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
       setLockScreen(false);
 
       showToast(
-        'El tipo de categoría no se pudo eliminar.',
+        'El tipo de producto no se pudo eliminar.',
         `Error: ${error.message}`,
         "error"
       );
@@ -130,16 +130,16 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
     setLockScreen({
       isVisible: true,
       type: "loading",
-      content: "Eliminando el tipo de categoría",
+      content: "Eliminando el tipo de producto",
     });
 
     mutationSoftDelete.mutate(id);
   };
 
   const mutationRestore = useMutation<string, Error, string>({
-    mutationFn: async (id: string) => await FetchHelper<CategoryType>({
+    mutationFn: async (id: string) => await FetchHelper<ProductType>({
       token: token ?? '',
-      baseUrl: `${API_ROUTES.CATEGORY_TYPE_RESTORE}/${id}`,
+      baseUrl: `${API_ROUTES.PRODUCT_TYPE_RESTORE}/${id}`,
       method: "POST"
     }),
     onSuccess: () => {
@@ -148,8 +148,8 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
       setLockScreen(false);
 
       showToast(
-        'Tipo de categoría restaurada.',
-        'El tipo de categoría fue restaurada exitosamente.',
+        'El tipo de producto restaurada.',
+        'El tipo de producto fue restaurada exitosamente.',
         "success"
       );
     },
@@ -157,7 +157,7 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
       setLockScreen(false);
 
       showToast(
-        'El tipo de categoría no se pudo restaurar.',
+        'El tipo de producto no se pudo restaurar.',
         `Error: ${error.message}`,
         "error"
       );
@@ -168,7 +168,7 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
     setLockScreen({
       isVisible: true,
       type: "loading",
-      content: "Restuarando el tipo de categoría",
+      content: "Restuarando el tipo de producto",
     });
 
     mutationRestore.mutate(id);
@@ -180,5 +180,5 @@ export const useCategoryTypeMutations = (refetch?: () => void) => {
     mutationHardDelete,
     handleSoftDelete,
     handleRestore
-  }
+  };
 }
