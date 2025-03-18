@@ -3,5 +3,6 @@ export type FindAll<T> = {
   limit: number;
   totalCount: number;
   hasMore: boolean;
+  totalPages: number;
   data: T[];
 }
