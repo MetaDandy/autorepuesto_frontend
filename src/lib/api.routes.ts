@@ -27,4 +27,12 @@ export const API_ROUTES = {
   PRODUCT_TYPE_HARD_DELETE: `${API_URL}/product_type/hard_delete`,
   PRODUCT_TYPE_SOFT_DELETE: `${API_URL}/product_type/soft_delete`,
   PRODUCT_TYPE_RESTORE: `${API_URL}/product_type/restore`,
+
+  // Product
+  PRODUCT: `${API_URL}/product`,
+  PRODUCT_FIND_ALL_SOFT: `${API_URL}/product/soft`,
+  PRODUCT_HARD_DELETE: `${API_URL}/product/hard_delete`,
+  PRODUCT_SOFT_DELETE: `${API_URL}/product/soft_delete`,
+  PRODUCT_RESTORE: `${API_URL}/product/restore`,
+  PRODUCT_IMAGES: `${API_URL}/product/images`,
 }
