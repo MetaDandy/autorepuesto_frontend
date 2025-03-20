@@ -8,6 +8,7 @@ export const ProductColumn = (
   handleSoftDelete: (id: string) => void,
   handleRestore: (id: string) => void,
   handleHardDelete: (id: string) => void,
+  handleDeleteOneImage: (id: string) => void,
 ): ColumnDef<Product>[] => [
     {
       accessorKey: 'name',
@@ -47,28 +48,30 @@ export const ProductColumn = (
           ? [
             {
               label: "Editar",
-              onClick: () => handleEdit(product?.id || ''),
+              onClick: () =>  product.id && handleEdit(product?.id),
             },
             {
               label: "Eliminar",
-              onClick: () => handleSoftDelete(product.id || ""),
+              onClick: () =>  product.id && handleSoftDelete(product.id),
+            },
+            {
+              label: "Eliminar la imagen",
+              onClick: () =>  product.id && handleDeleteOneImage(product.id),
             },
             {
               label: "Eliminar permanente",
-              onClick: () => handleHardDelete(product.id || ""),
+              onClick: () => product.id && handleHardDelete(product.id),
               variant: "destructive"
             }
           ]
           : [
             {
               label: "Restaurar",
-              onClick: () => handleRestore(product.id || ""),
+              onClick: () => {
+                console.log(product.id);
+                product.id && handleRestore(product.id)
+              },
             },
-            {
-              label: "Eliminar permanente",
-              onClick: () => handleHardDelete(product.id || ""),
-              variant: "destructive"
-            }
           ]
 
         return <TableActionMenu actions={actions} />

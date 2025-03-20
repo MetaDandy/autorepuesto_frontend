@@ -28,7 +28,7 @@ export default function ProductPage() {
     pageSize: pagination.pageSize,
   });
 
-  const { handleRestore, handleSoftDelete, mutationHardDelete } = useProductMutations(refetch);
+  const { handleRestore, handleSoftDelete, mutationHardDelete, handleDeleteOneImage } = useProductMutations(refetch);
 
   const handleHardDelete = async (id: string) => {
     setAlert({
@@ -66,6 +66,7 @@ export default function ProductPage() {
     handleSoftDelete,
     handleRestore,
     handleHardDelete,
+    handleDeleteOneImage
   );
 
   return (

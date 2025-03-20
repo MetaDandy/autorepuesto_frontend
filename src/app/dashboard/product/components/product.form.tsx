@@ -16,6 +16,7 @@ import { QUERY_KEY } from "@/lib/query_key";
 import { API_ROUTES } from "@/lib/api.routes";
 import { basicColumnGenerator } from "@/lib/basic_column_generator";
 import { ProductType } from "../../product_type/utils/product_type";
+import { ImageUploadField } from "@/components/form/image_upload_field";
 
 export const ProductForm = ({ product }: { product?: Product }) => {
   const { setLockScreen } = useAppStore();
@@ -55,7 +56,7 @@ export const ProductForm = ({ product }: { product?: Product }) => {
       content: `${product?.id ? 'Editando' : 'Creando'} el producto`,
     });
 
-    console.log('Datos en el on submit',data);
+    console.log('Datos en el on submit', data);
 
     if (product?.id) mutationUpdate.mutate({ id: product.id, data });
     else mutationCreate.mutate(data);
@@ -115,24 +116,27 @@ export const ProductForm = ({ product }: { product?: Product }) => {
             description="Ingrese un código."
           />
 
-          <FormField
-            control={form.control}
-            name="image"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Imagen</FormLabel>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    field.onChange(file);
-                  }}
-                />
-                <FormMessage />
-              </FormItem>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+            {product?.image && (
+              <div className="space-y-2">
+                <FormLabel className="block text-sm font-medium text-muted-foreground">
+                  Imagen actual
+                </FormLabel>
+                <div className="w-full rounded-md border border-muted p-2 bg-muted/20">
+                  <img
+                    src={product.image}
+                    alt="Imagen actual"
+                    className="w-full h-auto max-h-60 object-contain rounded"
+                  />
+                </div>
+              </div>
             )}
-          />
+
+            <ImageUploadField
+              control={form.control}
+              label={product?.image ? 'Nueva imagen (opcional)' : 'Imagen'}
+            />
+          </div>
 
 
           <FormField

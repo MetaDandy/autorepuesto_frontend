@@ -177,7 +177,7 @@ export const useProductMutations = (refetch?: () => void) => {
   const mutationRestore = useMutation<string, Error, string>({
     mutationFn: async (id: string) => await FetchHelper<Product>({
       token: token ?? '',
-      baseUrl: `${API_ROUTES.PRODUCT_TYPE_RESTORE}/${id}`,
+      baseUrl: `${API_ROUTES.PRODUCT_RESTORE}/${id}`,
       method: "POST"
     }),
     onSuccess: () => {
@@ -240,7 +240,7 @@ export const useProductMutations = (refetch?: () => void) => {
     }
   });
 
-  const mutationDeleteImages = useMutation<string, Error, string>({
+  const mutationDeleteMultipleImages = useMutation<string, Error, string>({
     mutationFn: async (id: string) => await FetchHelper<Product>({
       token: token ?? '',
       baseUrl: `${API_ROUTES.PRODUCT_IMAGES}/${id}`,
@@ -268,13 +268,52 @@ export const useProductMutations = (refetch?: () => void) => {
     },
   });
 
+  const mutationDeleteOneImage = useMutation<string, Error, string>({
+    mutationFn: async (id: string) => await FetchHelper<Product>({
+      token: token ?? '',
+      baseUrl: `${API_ROUTES.PRODUCT}/${id}/image`,
+      method: "DELETE"
+    }),
+    onSuccess: () => {
+      refetch?.();
+
+      setLockScreen(false);
+
+      showToast(
+        'Se eliminó la imagene del producto de forma exitosa.',
+        'Se eliminó la imagen exitosamente.',
+        "success"
+      );
+    },
+    onError: (error) => {
+      setLockScreen(false);
+
+      showToast(
+        'No se pudo eliminar la imagen del producto.',
+        `Error: ${error.message}`,
+        "error"
+      );
+    },
+  });
+
+  const handleDeleteOneImage = async (id: string) => {
+    setLockScreen({
+      isVisible: true,
+      type: "loading",
+      content: "Eliminando la imagen del producto",
+    });
+
+    mutationDeleteOneImage.mutate(id);
+  };
+
   return {
     mutationCreate,
     mutationUpdate,
     mutationHardDelete,
     mutationUploadImages,
-    mutationDeleteImages,
+    mutationDeleteMultipleImages,
     handleSoftDelete,
-    handleRestore
+    handleRestore,
+    handleDeleteOneImage
   };
 }
