@@ -9,4 +9,5 @@ export type Product = {
   technology: string;
   product_type: ProductType;
   image: any;
+  product_image?: any[];
 }

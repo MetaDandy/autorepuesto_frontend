@@ -15,7 +15,7 @@ export default function EditProductPage() {
     API_ROUTES.PRODUCT,
     id
   );
-
+  
   if (isLoading) return <p className="p-6">Cargando datos...</p>;
 
   return (

@@ -137,11 +137,19 @@ export const useProductMutations = (refetch?: () => void) => {
   });
 
   const mutationSoftDelete = useMutation<string, Error, string>({
-    mutationFn: async (id: string) => await FetchHelper<Product>({
-      token: token ?? '',
-      baseUrl: `${API_ROUTES.PRODUCT_SOFT_DELETE}/${id}`,
-      method: "DELETE"
-    }),
+    mutationFn: async (id: string) => {
+      setLockScreen({
+        isVisible: true,
+        type: "loading",
+        content: "Eliminando el producto",
+      });
+
+      return await FetchHelper<Product>({
+        token: token ?? '',
+        baseUrl: `${API_ROUTES.PRODUCT_SOFT_DELETE}/${id}`,
+        method: "DELETE"
+      })
+    },
     onSuccess: () => {
       refetch?.();
 
@@ -164,22 +172,20 @@ export const useProductMutations = (refetch?: () => void) => {
     },
   });
 
-  const handleSoftDelete = async (id: string) => {
-    setLockScreen({
-      isVisible: true,
-      type: "loading",
-      content: "Eliminando el producto",
-    });
-
-    mutationSoftDelete.mutate(id);
-  };
-
   const mutationRestore = useMutation<string, Error, string>({
-    mutationFn: async (id: string) => await FetchHelper<Product>({
-      token: token ?? '',
-      baseUrl: `${API_ROUTES.PRODUCT_RESTORE}/${id}`,
-      method: "POST"
-    }),
+    mutationFn: async (id: string) => {
+      setLockScreen({
+        isVisible: true,
+        type: "loading",
+        content: "Restuarando el producto",
+      });
+
+      return await FetchHelper<Product>({
+        token: token ?? '',
+        baseUrl: `${API_ROUTES.PRODUCT_RESTORE}/${id}`,
+        method: "POST"
+      })
+    },
     onSuccess: () => {
       refetch?.();
 
@@ -202,18 +208,13 @@ export const useProductMutations = (refetch?: () => void) => {
     },
   });
 
-  const handleRestore = async (id: string) => {
-    setLockScreen({
-      isVisible: true,
-      type: "loading",
-      content: "Restuarando el producto",
-    });
-
-    mutationRestore.mutate(id);
-  };
-
   const mutationUploadImages = useMutation({
     mutationFn: async ({ id, images }: { id: string; images: File[] }) => {
+      setLockScreen({
+        isVisible: true,
+        type: "loading",
+        content: 'Subiendo la(s) imagen(es).'
+      });
       const formData = new FormData();
 
       images.forEach((file) => {
@@ -233,19 +234,34 @@ export const useProductMutations = (refetch?: () => void) => {
       return res.json();
     },
     onSuccess: () => {
+      refetch?.();
+
+      setLockScreen(false);
+
       showToast("Imágenes actualizadas", "Las imágenes fueron subidas correctamente", "success");
     },
     onError: (error) => {
+      setLockScreen(false);
+
       showToast("Error", error.message, "error");
     }
   });
 
   const mutationDeleteMultipleImages = useMutation<string, Error, string>({
-    mutationFn: async (id: string) => await FetchHelper<Product>({
-      token: token ?? '',
-      baseUrl: `${API_ROUTES.PRODUCT_IMAGES}/${id}`,
-      method: "DELETE"
-    }),
+    mutationFn: async (id: string) => {
+      setLockScreen({
+        isVisible: true,
+        type: "loading",
+        content: 'Eliminando la imagen.'
+      });
+
+      return await FetchHelper<Product>({
+        token: token ?? '',
+        baseUrl: `${API_ROUTES.PRODUCT_IMAGES}/${id}`,
+        method: "DELETE"
+      }
+      );
+    },
     onSuccess: () => {
       refetch?.();
 
@@ -269,11 +285,20 @@ export const useProductMutations = (refetch?: () => void) => {
   });
 
   const mutationDeleteOneImage = useMutation<string, Error, string>({
-    mutationFn: async (id: string) => await FetchHelper<Product>({
-      token: token ?? '',
-      baseUrl: `${API_ROUTES.PRODUCT}/${id}/image`,
-      method: "DELETE"
-    }),
+    mutationFn: async (id: string) => {
+      setLockScreen({
+        isVisible: true,
+        type: "loading",
+        content: "Eliminando la imagen del producto",
+      });
+
+      return await FetchHelper<Product>({
+        token: token ?? '',
+        baseUrl: `${API_ROUTES.PRODUCT}/${id}/image`,
+        method: "DELETE"
+      }
+      )
+    },
     onSuccess: () => {
       refetch?.();
 
@@ -296,24 +321,14 @@ export const useProductMutations = (refetch?: () => void) => {
     },
   });
 
-  const handleDeleteOneImage = async (id: string) => {
-    setLockScreen({
-      isVisible: true,
-      type: "loading",
-      content: "Eliminando la imagen del producto",
-    });
-
-    mutationDeleteOneImage.mutate(id);
-  };
-
   return {
     mutationCreate,
     mutationUpdate,
     mutationHardDelete,
     mutationUploadImages,
     mutationDeleteMultipleImages,
-    handleSoftDelete,
-    handleRestore,
-    handleDeleteOneImage
+    mutationDeleteOneImage,
+    mutationRestore,
+    mutationSoftDelete
   };
 }

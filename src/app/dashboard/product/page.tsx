@@ -28,7 +28,7 @@ export default function ProductPage() {
     pageSize: pagination.pageSize,
   });
 
-  const { handleRestore, handleSoftDelete, mutationHardDelete, handleDeleteOneImage } = useProductMutations(refetch);
+  const { mutationRestore, mutationSoftDelete, mutationHardDelete, mutationDeleteOneImage } = useProductMutations(refetch);
 
   const handleHardDelete = async (id: string) => {
     setAlert({
@@ -63,10 +63,11 @@ export default function ProductPage() {
   const columns = ProductColumn(
     showDeleted,
     (id: string) => router.push(`/dashboard/product/${id}/edit`),
-    handleSoftDelete,
-    handleRestore,
+    (id: string)=> mutationSoftDelete.mutate(id),
+    (id: string)=> mutationRestore.mutate(id),
     handleHardDelete,
-    handleDeleteOneImage
+    (id: string)=> mutationDeleteOneImage.mutate(id),
+    (id: string) => router.push(`/dashboard/product/${id}/view`),
   );
 
   return (

@@ -9,6 +9,7 @@ export const ProductColumn = (
   handleRestore: (id: string) => void,
   handleHardDelete: (id: string) => void,
   handleDeleteOneImage: (id: string) => void,
+  handleView: (id: string) => void,
 ): ColumnDef<Product>[] => [
     {
       accessorKey: 'name',
@@ -46,6 +47,10 @@ export const ProductColumn = (
         const product = row.original
         const actions = !showDeleted
           ? [
+            {
+              label: "Ver producto",
+              onClick: () =>  product.id && handleView(product?.id),
+            },
             {
               label: "Editar",
               onClick: () =>  product.id && handleEdit(product?.id),
