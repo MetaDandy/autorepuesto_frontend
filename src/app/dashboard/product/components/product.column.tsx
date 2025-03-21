@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Product } from "../utils/product";
 import { TableActionMenu } from "@/components/table/table_action_menu";
+import { ImageWithTitle } from "@/components/image_with_title";
 
 export const ProductColumn = (
   showDeleted: boolean,
@@ -12,13 +13,12 @@ export const ProductColumn = (
   handleView: (id: string) => void,
 ): ColumnDef<Product>[] => [
     {
-      accessorKey: 'name',
-      header: 'Nombre'
-    },
-    {
-      header: 'Imagen',
+      header: 'Nombre',
       cell: ({ row }) => (
-        <img src={row.original.image} />
+        <ImageWithTitle 
+          title={row.original.name}
+          src={row.original.image}
+        />
       )
     },
     {
@@ -49,19 +49,19 @@ export const ProductColumn = (
           ? [
             {
               label: "Ver producto",
-              onClick: () =>  product.id && handleView(product?.id),
+              onClick: () => product.id && handleView(product?.id),
             },
             {
               label: "Editar",
-              onClick: () =>  product.id && handleEdit(product?.id),
+              onClick: () => product.id && handleEdit(product?.id),
             },
             {
               label: "Eliminar",
-              onClick: () =>  product.id && handleSoftDelete(product.id),
+              onClick: () => product.id && handleSoftDelete(product.id),
             },
             {
               label: "Eliminar la imagen",
-              onClick: () =>  product.id && handleDeleteOneImage(product.id),
+              onClick: () => product.id && handleDeleteOneImage(product.id),
             },
             {
               label: "Eliminar permanente",

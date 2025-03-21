@@ -157,13 +157,40 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const navMain = [
+    {
+      title: "Products",
+      url: "#",
+      icon: SquareTerminal,
+      isActive: true,
+      items: [
+        {
+          title: "Product",
+          url: "/dashboard/product",
+        },
+        {
+          title: "Product Type",
+          url: "/dashboard/product_type",
+        },
+        {
+          title: "Category Type",
+          url: "/dashboard/category_type",
+        },
+        {
+          title: "Category",
+          url: "/dashboard/category",
+        },
+      ],
+    },
+  ]
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
