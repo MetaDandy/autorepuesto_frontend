@@ -42,4 +42,11 @@ export const API_ROUTES = {
   DEPOSIT_HARD_DELETE: `${API_URL}/deposit/hard_delete`,
   DEPOSIT_SOFT_DELETE: `${API_URL}/deposit/soft_delete`,
   DEPOSIT_RESTORE: `${API_URL}/deposit/restore`,
+
+  // Characteristics
+  CHARACTERISTICS: `${API_URL}/characteristics`,
+  CHARACTERISTICS_FIND_ALL_SOFT: `${API_URL}/characteristics/soft`,
+  CHARACTERISTICS_HARD_DELETE: `${API_URL}/characteristics/hard_delete`,
+  CHARACTERISTICS_SOFT_DELETE: `${API_URL}/characteristics/soft_delete`,
+  CHARACTERISTICS_RESTORE: `${API_URL}/characteristics/restore`,
 }

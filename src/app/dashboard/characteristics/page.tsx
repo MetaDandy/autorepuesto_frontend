@@ -1,37 +1,37 @@
 'use client';
 
 import { useFindAllQuery } from "@/hooks/use_find_all_query";
-import { API_ROUTES } from "@/lib/api.routes";
-import { QUERY_KEY } from "@/lib/query_key";
 import useAppStore from "@/lib/store";
 import { PaginationState } from "@tanstack/react-table";
 import { useState } from "react";
-import { Deposit } from "./utils/deposit";
-import { useDepositMutations } from "./utils/use_deposit_mutations";
+import { Characteristics } from "./utils/characteristics";
+import { QUERY_KEY } from "@/lib/query_key";
+import { API_ROUTES } from "@/lib/api.routes";
+import { useCharacteristicsMutations } from "./utils/use_characteristics_mutations";
 import { Button } from "@/components/ui/button";
-import { DepositColumn } from "./components/deposit.column";
-import { DepositForm } from "./components/deposit.form";
+import { CharacteristicsColumn } from "./components/characteristics.column";
+import { CharacteristicsForm } from "./components/characteristics.form";
 import { DynamicTable } from "@/components/table/dynamic_table";
 
-export default function DepositPage() {
+export default function CharacteristicsPage() {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 5,
   });
   const [showDeleted, setShowDeleted] = useState(false);
   const { setAlert, setSheet } = useAppStore();
-  const { data, isFetching, isLoading, dataUpdatedAt, refetch } = useFindAllQuery<Deposit>({
-    queryKey: [QUERY_KEY.DEPOSIT, { showDeleted }],
-    route: showDeleted ? API_ROUTES.DEPOSIT_FIND_ALL_SOFT : API_ROUTES.DEPOSIT,
+  const { data, isFetching, isLoading, dataUpdatedAt, refetch } = useFindAllQuery<Characteristics>({
+    queryKey: [QUERY_KEY.CHARACTERISTICS, { showDeleted }],
+    route: showDeleted ? API_ROUTES.CHARACTERISTICS_FIND_ALL_SOFT : API_ROUTES.CHARACTERISTICS,
     pageIndex: pagination.pageIndex,
     pageSize: pagination.pageSize,
   });
 
-  const { mutationRestore, mutationSoftDelete, mutationHardDelete } = useDepositMutations(refetch);
+  const { mutationRestore, mutationSoftDelete, mutationHardDelete } = useCharacteristicsMutations(refetch);
 
   const handleHardDelete = async (id: string) => {
     setAlert({
-      title: 'Eliminar el depósito permanentemente.',
+      title: 'Eliminar la característica permanentemente.',
       isOpen: true,
       description: '',
       btnCancel:
@@ -54,13 +54,13 @@ export default function DepositPage() {
     });
   };
 
-  const columns = DepositColumn(
+  const columns = CharacteristicsColumn(
     showDeleted,
-    (deposit: Deposit) => {
+    (characteristic: Characteristics) => {
       setSheet({
-        title: 'Editar el depósito',
-        description: 'Ingrese los datos del depósito',
-        content: <DepositForm deposit={deposit} refetch={refetch} />,
+        title: 'Editar la característica',
+        description: 'Ingrese los datos de la característica',
+        content: <CharacteristicsForm characteristic={characteristic} refetch={refetch} />,
         isOpen: true,
         side: "right",
         btnAction: null,
@@ -75,7 +75,7 @@ export default function DepositPage() {
   return (
     <div className="space-y-4">
       <DynamicTable
-        title="Producto"
+        title="Característica"
         columns={columns}
         data={data?.data || []}
         isLoading={isLoading || (isFetching && dataUpdatedAt === 0)}
@@ -83,15 +83,15 @@ export default function DepositPage() {
         pagination={pagination}
         onPaginationChange={setPagination}
         handleCreate={() => setSheet({
-          title: 'Crear el depósito',
-          description: 'Ingrese los datos del depósito',
-          content: <DepositForm refetch={refetch} />,
+          title: 'Crear la característica',
+          description: 'Ingrese los datos de la característica',
+          content: <CharacteristicsForm refetch={refetch} />,
           isOpen: true,
           side: "right",
           btnAction: null,
           btnCancel: null,
         })}
-        createName="Crear producto"
+        createName="Crear característica"
         showDeleted={showDeleted}
         setShowDeleted={setShowDeleted}
       />
