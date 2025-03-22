@@ -4,4 +4,5 @@ export const QUERY_KEY = {
   CATEGORY_TYPE: 'category_type',
   PRODUCT_TYPE: 'product_type',
   PRODUCT: 'product',
+  DEPOSIT: 'deposit',
 }
