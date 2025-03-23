@@ -52,29 +52,6 @@ const data = {
   ],
   navMain: [
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
       title: "Settings",
       url: "#",
       icon: Settings2,
@@ -159,6 +136,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {
           title: "Deposit Product",
           url: "/dashboard/deposit_product",
+        },
+      ],
+    },
+    {
+      title: "Notes",
+      url: "#",
+      icon: BookOpen,
+      items: [
+        {
+          title: "Income note",
+          url: "/dashboard/income_note",
+        },
+        {
+          title: "Get Started",
+          url: "#",
+        },
+        {
+          title: "Tutorials",
+          url: "#",
+        },
+        {
+          title: "Changelog",
+          url: "#",
         },
       ],
     },

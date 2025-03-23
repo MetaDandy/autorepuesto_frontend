@@ -7,4 +7,5 @@ export const QUERY_KEY = {
   DEPOSIT: 'deposit',
   CHARACTERISTICS: 'characteristics',
   DEPOSIT_PRODUCT: 'deposit_product',
+  INCOME_NOTE: 'income_note',
 }

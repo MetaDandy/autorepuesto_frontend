@@ -40,8 +40,8 @@ type Props<T> = {
   globalFilterPlaceholder?: string;
   createName?: string;
   handleCreate?: () => void;
-  showDeleted: boolean;
-  setShowDeleted: (val: boolean)=> void;
+  showDeleted?: boolean;
+  setShowDeleted?: (val: boolean) => void;
 }
 
 export function DynamicTable<T>({
@@ -103,16 +103,18 @@ export function DynamicTable<T>({
           onColumnVisibilityChange={setColumnVisibility}
         />
 
-        <div className="flex items-center space-x-2">
-          <Switch
-            checked={showDeleted}
-            onCheckedChange={(val) => setShowDeleted(val)}
-            id="show-deleted"
-          />
-          <Label htmlFor="show-deleted">
-            {showDeleted ? "Mostrando eliminados" : "Mostrando activos"}
-          </Label>
-        </div>
+        {typeof showDeleted !== 'undefined' && setShowDeleted && (
+          <div className="flex items-center space-x-2">
+            <Switch
+              checked={showDeleted}
+              onCheckedChange={(val) => setShowDeleted(val)}
+              id="show-deleted"
+            />
+            <Label htmlFor="show-deleted">
+              {showDeleted ? "Mostrando eliminados" : "Mostrando activos"}
+            </Label>
+          </div>
+        )}
       </div>
 
       <div className="space-y-4">

@@ -56,4 +56,7 @@ export const API_ROUTES = {
   DEPOSIT_PRODUCT_HARD_DELETE: `${API_URL}/deposit_product/hard_delete`,
   DEPOSIT_PRODUCT_SOFT_DELETE: `${API_URL}/deposit_product/soft_delete`,
   DEPOSIT_PRODUCT_RESTORE: `${API_URL}/deposit_product/restore`,
+
+  // Income note
+  INCOME_NOTE: `${API_URL}/income_note`
 }

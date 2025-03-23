@@ -14,11 +14,8 @@ export default function PermissionPage() {
         pageIndex: 0,
         pageSize: 5,
     });
-
-    // TODO: Ver el tema del query key, y el tema del showDeleted de la dynamic table
-
     const { data, isFetching, isLoading, dataUpdatedAt } = useFindAllQuery<Permissions>({
-        queryKey: QUERY_KEY.PERMISSION,
+        queryKey: [QUERY_KEY.PERMISSION, { showDelete: false }],
         route: API_ROUTES.FIND_ALL_PERMISSIONS,
         pageIndex: pagination.pageIndex,
         pageSize: pagination.pageSize,
