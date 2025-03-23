@@ -15,7 +15,7 @@ export function basicColumnGenerator<T>(fields: (keyof T)[]): ColumnDef<T>[] {
  * Capitaliza y convierte snake_case o camelCase a un header legible
  * Ej: "created_at" → "Created At"
  */
-function capitalizeHeader(text: string): string {
+export function capitalizeHeader(text: string): string {
   return text
     .replace(/([A-Z])/g, ' $1') // camelCase → space
     .replace(/_/g, ' ')         // snake_case → space

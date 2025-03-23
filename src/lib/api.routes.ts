@@ -49,4 +49,11 @@ export const API_ROUTES = {
   CHARACTERISTICS_HARD_DELETE: `${API_URL}/characteristics/hard_delete`,
   CHARACTERISTICS_SOFT_DELETE: `${API_URL}/characteristics/soft_delete`,
   CHARACTERISTICS_RESTORE: `${API_URL}/characteristics/restore`,
+
+  // Deposit Product
+  DEPOSIT_PRODUCT: `${API_URL}/deposit_product`,
+  DEPOSIT_PRODUCT_FIND_ALL_SOFT: `${API_URL}/deposit_product/soft`,
+  DEPOSIT_PRODUCT_HARD_DELETE: `${API_URL}/deposit_product/hard_delete`,
+  DEPOSIT_PRODUCT_SOFT_DELETE: `${API_URL}/deposit_product/soft_delete`,
+  DEPOSIT_PRODUCT_RESTORE: `${API_URL}/deposit_product/restore`,
 }

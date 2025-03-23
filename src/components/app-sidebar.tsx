@@ -158,7 +158,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         },
         {
           title: "Deposit Product",
-          url: "#",
+          url: "/dashboard/deposit_product",
         },
       ],
     },
